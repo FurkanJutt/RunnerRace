@@ -1,0 +1,17 @@
+{
+    "name": "CollisionBear.PreviewField.Editor",
+    "references": [
+        "CollisionBear.PreviewField"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
