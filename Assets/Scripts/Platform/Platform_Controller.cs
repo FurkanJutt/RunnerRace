@@ -39,7 +39,7 @@ public class Platform_Controller : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other !=null && other.CompareTag("Player"))
+		if (other !=null && other.CompareTag("Destroyer"))
 		{
 			transform.position = new Vector3(0, transform.position.y + 51 * 3, 0);
             PositionateCollects();

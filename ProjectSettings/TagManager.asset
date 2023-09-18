@@ -12,6 +12,7 @@ TagManager:
   - Grass
   - CheckPoint
   - OtherCar
+  - Destroyer
   layers:
   - Default
   - TransparentFX

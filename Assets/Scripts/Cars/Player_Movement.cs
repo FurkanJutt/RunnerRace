@@ -84,23 +84,23 @@ public class Player_Movement : MonoBehaviour
         transform.position += new Vector3(0, speed * Time.deltaTime, 0);
 
         // Burst Movement
-        if (Input.GetKey(KeyCode.UpArrow) || joystick.Vertical > 0)
+        if (Input.GetKey(KeyCode.UpArrow) || joystick.Vertical == 1)
         {
-            transform.position += new Vector3(0, speed * burst * Time.deltaTime, 0);
+            transform.position += new Vector3(0, (speed * burst) * Time.deltaTime, 0);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) || joystick.Horizontal > 0)
+        if (Input.GetKey(KeyCode.RightArrow) || joystick.Horizontal == 1)
         {
             transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, -47), rotationSpeed * Time.deltaTime);
         }
 
-        else if (Input.GetKey(KeyCode.LeftArrow) || joystick.Horizontal < 0)
+        else if (Input.GetKey(KeyCode.LeftArrow) || joystick.Horizontal == -1)
         {
             transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 47), rotationSpeed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.DownArrow) || joystick.Vertical < 0)
+        else if (Input.GetKey(KeyCode.DownArrow) || joystick.Vertical == -1)
         {
             transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
         }
