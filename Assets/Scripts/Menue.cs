@@ -26,21 +26,23 @@ public class Menue : MonoBehaviour
     public Sprite enduranceOriginalImage;
     public Sprite enduranceMaskImage;
 
-    [Space]
-    public TextMeshProUGUI coinText;
+    [Header("Coins")]
+    public TextMeshProUGUI coinTextMenu;
+    public TextMeshProUGUI coinTextShop;
+    public TextMeshProUGUI coinTextConfirmBuy;
 
     [Header("Hall OF Fame UI")]
     public Transform EnduranceBoardParent;
     public Transform SprintboardParent;
 
-    [Header("Settings")]
+    [Header("Sound UI")]
     public Image soundOn;
     public TextMeshProUGUI soundOnText;
     public Image soundOff;
     public TextMeshProUGUI soundOffText;
     public Color soundButtonColor;
 
-    [Header("Settings")]
+    [Header("Stick UI")]
     public Image stickRight;
     public TextMeshProUGUI stickRightText;
     public Image stickLeft;
@@ -92,7 +94,7 @@ public class Menue : MonoBehaviour
     {
         get
         {
-            return PlayerPrefs.GetInt("TotalScore", 300);
+            return PlayerPrefs.GetInt("TotalScore", 0);
         }
         set
         {
@@ -112,22 +114,21 @@ public class Menue : MonoBehaviour
     private void Start()
     {
         // sound check
-        if (PlayerPrefs.GetInt("SoundToggle") == 1)
+        if (PlayerPrefs.GetInt("SoundToggle", 1) == 1)
             ToggleSound(true);
         else 
             ToggleSound(false);
 
         // stick check
-        if (PlayerPrefs.GetInt("StickToggle") == 1)
+        if (PlayerPrefs.GetInt("StickToggle", 0) == 1)
             ToggleStick(true);
         else
             ToggleStick(false);
 
-        coinText.text = playerCoins.ToString();
+        UpdateCoinText();
         ActivatePannel(MainMenu.name);
         sprintModeButton.image.sprite = sprintOriginalImage;
         enduranceModeButton.image.sprite = enduranceMaskImage;
-        GameDataManager.Instance.playerCoins = playerCoins;
     }
 
     public void ShowHallOfFameOfEnduranceMode()
@@ -169,7 +170,9 @@ public class Menue : MonoBehaviour
     {
         //int totalCoins = PlayerPrefs.GetInt("TotalCoins", 0);
         GameDataManager.Instance.playerCoins = playerCoins;
-        coinText.text = playerCoins.ToString();
+        coinTextMenu.text = playerCoins.ToString();
+        coinTextShop.text = playerCoins.ToString();
+        coinTextConfirmBuy.text = playerCoins.ToString();
     }
 
     public void ActivatePannel(string pannelWillBeActivated)
@@ -217,6 +220,6 @@ public class Menue : MonoBehaviour
 
     public void UpdateCoins(int coins)
     {
-        coinText.text = coins.ToString();
+        coinTextMenu.text = coins.ToString();
     }
 }

@@ -21,7 +21,7 @@ public class ShopItem : MonoBehaviour
 
     public static int[] carCost = { 200, 200, 200, 200, 200, 200, 200, 200, 200, 200,
     200,200,200,200,200,200,200,200,200,200,200,200,200,200,200};
-    public static int[] LifeCost = { 0, 300, 500, 700, 1000 };
+    //public static int[] LifeCost = { 0, 300, 500, 700, 1000 };
 
     public GameObject BuyItem;
 
@@ -39,10 +39,10 @@ public class ShopItem : MonoBehaviour
         {
             cost = carCost[id];
         }
-        else
-        {
-            cost = LifeCost[id];
-        }
+        //else
+        //{
+        //    cost = LifeCost[id];
+        //}
         costText.text = cost.ToString() + " coins";
 
         UpdateState();
@@ -105,24 +105,49 @@ public class ShopItem : MonoBehaviour
             }
 
         }
-        else
+        else if (shopItemType == ShopItemType.Life)
         {
-            if (PlayerPrefs.GetInt("Life" + id, 0) == 1)
+            if (Menue.instance.playerCoins >= cost)
             {
-                PlayerPrefs.SetInt("SelectLife", id);
+                //AudioManager.Instance.PlaySFX(SFXType.unlockLifes);
+
+                PlayerPrefs.SetInt("Life" + id, 1);
+                //PlayerPrefs.SetInt("SelectLife", id);
+                Menue.instance.playerCoins -= cost;
+                Menue.instance.UpdateCoinText();
+                //PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore", 0) - cost);
             }
             else
             {
-                if (Menue.instance.playerCoins >= cost)
-                {
-                    //AudioManager.Instance.PlaySFX(SFXType.unlockLifes);
-
-                    PlayerPrefs.SetInt("Life" + id, 1);
-                    PlayerPrefs.SetInt("SelectLife", id);
-                    Menue.instance.playerCoins -= cost;
-                    Menue.instance.UpdateCoinText();
-                    //PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore", 0) - cost);
-                }
+                InsufficentFunds.SetActive(true);
+            }
+        }
+        else if (shopItemType == ShopItemType.Time)
+        {
+            if (Menue.instance.playerCoins >= cost)
+            {
+                PlayerPrefs.SetInt("Time" + id, 1);
+                //PlayerPrefs.SetInt("SelectTime", id);
+                Menue.instance.playerCoins -= cost;
+                Menue.instance.UpdateCoinText();
+            }
+            else
+            {
+                InsufficentFunds.SetActive(true);
+            }
+        }
+        else if (shopItemType == ShopItemType.Respawn)
+        {
+            if (Menue.instance.playerCoins >= cost)
+            {
+                PlayerPrefs.SetInt("Respawn" + id, 1);
+                //PlayerPrefs.SetInt("SelectRespawn", id);
+                Menue.instance.playerCoins -= cost;
+                Menue.instance.UpdateCoinText();
+            }
+            else
+            {
+                InsufficentFunds.SetActive(true);
             }
         }
         // MainMenuController.Instance.UpdateTextScore();
@@ -149,32 +174,55 @@ public class ShopItem : MonoBehaviour
             else
             {
                 GetComponent<Image>().sprite = DefaultImage;
-
             }
-
         }
-        else
+        else if(shopItemType == ShopItemType.Life)
         {
+            //if (PlayerPrefs.GetInt("Life" + id, 0) == 1)
+            //{
+            //    costObject.gameObject.SetActive(false);
+            //}
+            //else
+            //{
+            //    costObject.gameObject.SetActive(true);
+            //}
+            selectedImage.SetActive(PlayerPrefs.GetInt("Life"+id, 0) == 1);
             if (PlayerPrefs.GetInt("Life" + id, 0) == 1)
             {
-                costObject.gameObject.SetActive(false);
+                //GetComponent<Image>().sprite = SlectImage;
+                GetComponent<Button>().interactable = false;
             }
             else
             {
-                costObject.gameObject.SetActive(true);
-            }
-            selectedImage.SetActive(PlayerPrefs.GetInt("SelectLife", 0) == id);
-            if (selectedImage.activeSelf)
-            {
-                GetComponent<Image>().sprite = SlectImage;
-            }
-            else
-            {
-                GetComponent<Image>().sprite = DefaultImage; ;
+                //GetComponent<Image>().sprite = DefaultImage;
+                GetComponent<Button>().interactable = true;
 
             }
             //BGForLife.SetActive(false);
             //BGForLife.SetActive(true);
+        }
+        else if (shopItemType == ShopItemType.Time)
+        {
+            if (PlayerPrefs.GetInt("Time" + id, 0) == 1)
+            {
+                GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                GetComponent<Button>().interactable = true;
+            }
+        }
+        else if (shopItemType == ShopItemType.Respawn)
+        {
+            
+            if (PlayerPrefs.GetInt("Respawn" + id, 0) == 1)
+            {
+                GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                GetComponent<Button>().interactable = true;
+            }
         }
     }
     void UpdateAllItem()
@@ -187,5 +235,7 @@ public class ShopItem : MonoBehaviour
 enum ShopItemType
 {
     Car,
-    Life
+    Life,
+    Time,
+    Respawn
 }

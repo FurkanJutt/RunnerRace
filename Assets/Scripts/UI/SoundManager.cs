@@ -18,19 +18,37 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private AudioSource audioSource;
+    public AudioSource BgAudioSource;
+    public AudioSource audioSource;
 
     public bool sound = true;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
         // sound check
         if (PlayerPrefs.GetInt("SoundToggle") == 1)
             sound = true;
         else
             sound = false;
+
+        if (!sound)
+        {
+            ToggleSound(false);
+        }
+    }
+
+    public void ToggleSound(bool toggle)
+    {
+        if (toggle)
+        {
+            audioSource.volume = 1.0f;
+            BgAudioSource.volume = 1.0f;
+        }
+        else
+        {
+            audioSource.volume = 0f;
+            BgAudioSource.volume = 0f;
+        }
     }
 
     public void PlaySoundFX(AudioClip clip, float volume)

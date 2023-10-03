@@ -9,6 +9,14 @@ public class GameDataManager : MonoBehaviour
 {
     public static GameDataManager Instance;
 
+    [HideInInspector] public int playerCoins;
+    [HideInInspector] public int sprintRoundCount;
+    [HideInInspector] public EnduranceRank enduranceRank = new EnduranceRank();
+    [HideInInspector] public SprintRank sprintRank = new SprintRank();
+
+    [HideInInspector] public List<EnduranceRank> enduranceRanks = new List<EnduranceRank>();
+    [HideInInspector] public List<SprintRank> sprintRanks = new List<SprintRank>();
+
     public string enduranceRanksJson
     {
         get
@@ -20,6 +28,7 @@ public class GameDataManager : MonoBehaviour
             PlayerPrefs.SetString("enduranceRanksJson", value);
         }
     }
+
     public string sprintRanksJson
     {
         get
@@ -31,12 +40,7 @@ public class GameDataManager : MonoBehaviour
             PlayerPrefs.SetString("sprintRanksJson", value);
         }
     }
-    public int playerCoins;
-    public EnduranceRank enduranceRank=new EnduranceRank();
-    public SprintRank sprintRank=new SprintRank();
 
-    public List<EnduranceRank> enduranceRanks = new List<EnduranceRank>();
-    public List<SprintRank> sprintRanks = new List<SprintRank>();
     private void Awake()
     {
         if (Instance == null)
@@ -49,8 +53,10 @@ public class GameDataManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     void Start()
     {
+        sprintRoundCount = 0;
         if (string.IsNullOrEmpty(sprintRanksJson))
         {
             SaveSpringRank();
@@ -67,11 +73,6 @@ public class GameDataManager : MonoBehaviour
         {
             LoadEnduranceRank();
         }
-    }
-
-    void Update()
-    {
-        
     }
 
     public void AddEnduranceRank()
@@ -104,17 +105,35 @@ public class GameDataManager : MonoBehaviour
     {
         sprintRanks = JsonConvert.DeserializeObject<List<SprintRank>>(sprintRanksJson);
     }
+
     public void LoadEnduranceRank()
     {
         enduranceRanks=JsonConvert.DeserializeObject<List<EnduranceRank>>(enduranceRanksJson);
     }
+
     public void SaveEnduranceRank()
     {
         enduranceRanksJson=JsonConvert.SerializeObject(enduranceRanks);
     }
+
     public void SaveSpringRank()
     {
-        sprintRanksJson=JsonConvert.SerializeObject(sprintRanks);
+        sprintRanksJson = JsonConvert.SerializeObject(sprintRanks);
+    }
+
+    public void EndGame()
+    {
+        Time.timeScale = 0f;
+        if (!UIManager.instance.sprintMode)
+        {
+            enduranceRank.time = TimerController.instance.totalTimePlayed;
+            enduranceRank.mile = UIManager.instance.Distance;
+            AddEnduranceRank();
+            TimerController.instance.DisplayTotalTimePlayed();
+            UIManager.instance.UpdateTotalDistance();
+        }
+        else
+            FinishLane.instance.GameOver();
     }
 }
 

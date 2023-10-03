@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class FinishLane : MonoBehaviour
 {
-    public static FinishLane fL;
+    public static FinishLane instance;
 
     public string playerTag = "Player";
     public string opponentTag = "OtherCar";
@@ -17,9 +17,9 @@ public class FinishLane : MonoBehaviour
 
     private void Awake()
     {
-        if (fL == null)
+        if (instance == null)
         {
-            fL = this;
+            instance = this;
         }
         else
         {
@@ -29,40 +29,55 @@ public class FinishLane : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!raceFinished)
+        if (other.CompareTag(playerTag))
         {
-            if (other.CompareTag(playerTag))
-            {
-                playerRoundFinishCount++; // Increment round completion count
+            //playerRoundFinishCount++; // Increment round completion count
 
-                if (!playerFinishedRound)
-                {
-                    playerFinishCount++; // Increment finishes count if player finished first
-                    playerFinishedRound = true; // Player finished this round
-                }
-                DisplayRaceResult(playerRoundFinishCount, playerFinishCount); // Update UI with the round and finish counts
-            }
-            else if (other.CompareTag(opponentTag))
-            {
-                playerFinishedRound = false; // Opponent touched the finish line before the player
-            }
+            //if (!playerFinishedRound)
+            //{
+            //    playerFinishCount++; // Increment finishes count if player finished first
+            //    playerFinishedRound = true; // Player finished this round
+            //}
+
+            GameDataManager.Instance.sprintRoundCount++;
+            Time.timeScale = 0f;
+            UIManager.instance.gameWinPanel.SetActive(true);
+            UIManager.instance.DisplaySprintRaceResult();
+            //DisplayRaceResult(playerRoundFinishCount, playerFinishCount); // Update UI with the round and finish counts
+        }
+        else if (other.CompareTag(opponentTag))
+        {
+            //playerFinishedRound = false; // Opponent touched the finish line before the player
+            Time.timeScale = 0f;
+            GameOver();
+            UIManager.instance.gameOverPanel.SetActive(true);
+            UIManager.instance.DisplaySprintRaceResult();
+            //DisplayRaceResult(playerRoundFinishCount, playerFinishCount); // Update UI with the round and finish counts
         }
     }
 
-    private void DisplayRaceResult(int playerRoundFinishCount, int playerFinishCount)
-    {
-        UIManager.instance.finishText.text = "Positions " + playerFinishCount.ToString();
-        UIManager.instance.roundText.text = "Rounds " + playerRoundFinishCount.ToString();
-    }
+    //private void DisplayRaceResult(int playerRoundFinishCount, int playerFinishCount)
+    //{
+    //    UIManager.instance.gameOverPositionText.text = "Position " + playerFinishCount.ToString();
+    //    UIManager.instance.gameOverRoundText.text = "Rounds " + playerRoundFinishCount.ToString();
+    //    UIManager.instance.gameWinPositionText.text = "Position " + playerFinishCount.ToString();
+    //    UIManager.instance.gameWinRoundText.text = "Rounds " + playerRoundFinishCount.ToString();
+    //}
 
     public void GameOver()
     {
-        // Call this function when the game is over (e.g., when you want to end the race)
-        GameDataManager.Instance.sprintRank.round = playerRoundFinishCount;
-        GameDataManager.Instance.sprintRank.crash = Player_Movement.instance.crash;
-        GameDataManager.Instance.sprintRank.finish = playerFinishCount;
-        GameDataManager.Instance.AddSprintRank();
-        raceFinished = true;
-        Time.timeScale = 0f;
+        if (GameDataManager.Instance.sprintRoundCount >= 1)
+        {
+            // Call this function when the game is over (e.g., when you want to end the race)
+            GameDataManager.Instance.sprintRank.round = GameDataManager.Instance.sprintRoundCount;
+            GameDataManager.Instance.sprintRank.crash = Player_Movement.instance.crash;
+            GameDataManager.Instance.sprintRank.finish = int.Parse(UIManager.instance.positionText.text);
+            GameDataManager.Instance.AddSprintRank();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameOver();
     }
 }

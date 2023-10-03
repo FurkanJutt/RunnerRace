@@ -13,7 +13,7 @@ public class DynamicJoystick : Joystick
     {
         MoveThreshold = moveThreshold;
         base.Start();
-        background.gameObject.SetActive(false);
+        background.gameObject.SetActive(true);
     }
 
     public override void OnPointerDown(PointerEventData eventData)

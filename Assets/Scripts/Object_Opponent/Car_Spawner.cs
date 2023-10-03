@@ -6,6 +6,7 @@ public class Car_Spawner : MonoBehaviour
 {
     public GameObject[] carsPrefeb;
     public float[] xPositions;
+    public Transform parentTransform;
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class Car_Spawner : MonoBehaviour
         int rand = Random.Range(0, carsPrefeb.Length);
         float randomX = GetRandomXPosition();
         Vector3 spawnPosition = new Vector3(randomX, transform.position.y, transform.position.z);
-        Instantiate(carsPrefeb[rand], spawnPosition, Quaternion.identity);
+        Instantiate(carsPrefeb[rand], spawnPosition, Quaternion.identity, parentTransform);
     }
 
     private float GetRandomXPosition()
@@ -30,7 +31,7 @@ public class Car_Spawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             CarsSpawn();
         }
     }

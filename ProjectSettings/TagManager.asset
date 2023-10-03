@@ -13,6 +13,8 @@ TagManager:
   - CheckPoint
   - OtherCar
   - Destroyer
+  - SpawnPoint
+  - Collider
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Opponent
+  - Enemy
   - 
   - 
   - 

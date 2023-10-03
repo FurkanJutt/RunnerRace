@@ -17,8 +17,6 @@ public class TimerController : MonoBehaviour
     public int countdownTime;
 
     public TextMeshProUGUI timerText;
-    public TextMeshProUGUI scoreText;
-    public int coin;
 
     public AudioClip objectCollectClip;
 
@@ -36,11 +34,23 @@ public class TimerController : MonoBehaviour
 
     private void Start()
     {
+        timerDuration += GetMaxTime();
         currentTime = timerDuration;
         UpdateTimerText();
-        UpdateCoinText();
 
         totalTimePlayed = 0f;
+    }
+
+    public int GetMaxTime()
+    {
+        if (PlayerPrefs.GetInt("Time3", 0) == 1)
+            return 20;
+        else if (PlayerPrefs.GetInt("Time2", 0) == 1)
+            return 15;
+        else if (PlayerPrefs.GetInt("Time1", 0) == 1)
+            return 10;
+        else
+            return 0;
     }
 
     private void Update()
@@ -62,11 +72,9 @@ public class TimerController : MonoBehaviour
                 UIManager.instance.gameOverPanel.SetActive(true);
                 UIManager.instance.UpdateTotalDistance();
 
-                //                FinishLane.fL.GameOver();
                 GameDataManager.Instance.enduranceRank.time = totalTimePlayed;
                 GameDataManager.Instance.enduranceRank.mile = UIManager.instance.Distance;
                 GameDataManager.Instance.AddEnduranceRank();
-                Debug.Log("Game Over");
             }
 
             UpdateTimerText();
@@ -111,21 +119,5 @@ public class TimerController : MonoBehaviour
             UpdateTimerText();
             other.transform.parent.gameObject.SetActive(false);
         }
-        else if (other.CompareTag("Coin"))
-        {
-            SoundManager.instance.PlaySoundFX(objectCollectClip, 0.9f);
-            coin++;
-            GameDataManager.Instance.playerCoins++;
-            PlayerPrefs.SetInt("TotalScore", GameDataManager.Instance.playerCoins);
-            UpdateCoinText();
-            //int totalCoins = PlayerPrefs.GetInt("TotalCoins", 0);
-            Debug.Log("Total Coins: " + GameDataManager.Instance.playerCoins);
-            other.transform.parent.gameObject.SetActive(false);
-        }
-    }
-
-    private void UpdateCoinText()
-    {
-        scoreText.text = coin.ToString();
     }
 }

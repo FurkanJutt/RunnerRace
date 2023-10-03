@@ -6,7 +6,9 @@ public class Destroyer : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
-        Destroy(collision.gameObject);
+        if (collision.CompareTag("Coin") || collision.CompareTag("Timer") || collision.CompareTag("Opponent"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

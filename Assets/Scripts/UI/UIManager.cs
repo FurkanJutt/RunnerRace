@@ -9,6 +9,53 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    [Header("Sprint Mode ?")]
+    public bool sprintMode = false;
+
+    [Space]
+    public GameObject gameOverPanel;
+    public GameObject pauseMenuPanel;
+    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI respawnChancesText;
+
+    public Text countdownDisplay;
+
+    [Header("Sprint Mode UI")]
+    public GameObject gameWinPanel;
+    public TextMeshProUGUI positionText;
+    //public TextMeshProUGUI totalPositionText;
+    public TextMeshProUGUI roundText;
+    public TextMeshProUGUI gameOverRoundText;
+    public TextMeshProUGUI gameOverPositionText;
+    public TextMeshProUGUI gameWinRoundText;
+    public TextMeshProUGUI gameWinPositionText;
+    [HideInInspector] public int position = 1;
+    [HideInInspector] public int totalPositions = 1;
+
+    [Header("Endurance Mode UI")]
+    public TextMeshProUGUI totalDistanceText;
+    public float Distance;
+    public TextMeshProUGUI distanceText;
+    public TextMeshProUGUI timePlayedText;
+    public Image[] lifeHearts;
+    private int lifeCount;
+
+    [Header("Barriers")]
+    public Transform bottomBarrier;
+    public Transform topBarrier;
+
+    [Header("References")]
+    public Player_Movement player;
+    public Opponent_Movement opponent;
+
+    [Header("Joysticks")]
+    public GameObject leftJoystick;
+    public GameObject rightJoystick;
+
+    private bool isGamePaused = false;
+
+    //public GameObject damageImage;
+
     private void Awake()
     {
         if (instance == null)
@@ -19,33 +66,8 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    [SerializeField] public GameObject gameOverPanel, pauseMenuPanel;
-
-    public TextMeshProUGUI timePlayedText;
-    public TextMeshProUGUI respawnChancesText;
-    public Text countdownDisplay;
-    public TextMeshProUGUI roundText;
-    public TextMeshProUGUI finishText;
-    public TextMeshProUGUI totalDistanceText;
-    public float Distance;
-    public TextMeshProUGUI distanceText;
-
-    [Header("Joysticks")]
-    public GameObject leftJoystick;
-    public GameObject rightJoystick;
-
-    //public GameObject damageImage;
-
-    public Image[] lifeHearts;
-
-    private bool isGamePaused = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(PlayerPrefs.GetInt("StickToggle", 0) == 0)
+        if (PlayerPrefs.GetInt("StickToggle", 0) == 0)
         {
             leftJoystick.SetActive(true);
             rightJoystick.SetActive(false);
@@ -55,8 +77,55 @@ public class UIManager : MonoBehaviour
             leftJoystick.SetActive(false);
             rightJoystick.SetActive(true);
         }
+    }
 
-        ResumeGame(); 
+    // Start is called before the first frame update
+    void Start()
+    {
+        ResumeGame();
+        if(!sprintMode) 
+        {
+            
+            lifeCount = GetMaxLife();
+            UpdateLives(lifeCount);
+        }
+        else
+        {
+            player = FindObjectOfType<Player_Movement>();
+            opponent = FindObjectOfType<Opponent_Movement>();
+            for (int i = 0; i < lifeHearts.Length; i++)
+            {
+                lifeHearts[i].gameObject.SetActive(false);
+            }
+        }
+        respawnChancesText.text = GetMaxRespawn().ToString();
+        UpdateSprintRoundText();
+        //position = totalPositions;
+        //UpdateSprintPostion();
+    }
+
+    public int GetMaxLife()
+    {
+        if (PlayerPrefs.GetInt("Life3", 0) == 1)
+            return 3;
+        else if (PlayerPrefs.GetInt("Life2", 0) == 1)
+            return 2;
+        else if (PlayerPrefs.GetInt("Life1", 0) == 1)
+            return 1;
+        else
+            return 0;
+    }
+
+    public int GetMaxRespawn()
+    {
+        if (PlayerPrefs.GetInt("Respawn3", 0) == 1)
+            return 3;
+        else if (PlayerPrefs.GetInt("Respawn2", 0) == 1)
+            return 2;
+        else if (PlayerPrefs.GetInt("Respawn1", 0) == 1)
+            return 1;
+        else
+            return 0;
     }
 
     public void UpdateLives(int lives)
@@ -91,7 +160,17 @@ public class UIManager : MonoBehaviour
 
     public void Home()
     {
+        if (FinishLane.instance != null)
+        {
+            FinishLane.instance.GameOver();
+        }
         SceneManager.LoadScene("Start Scene");
+        Menue.instance.UpdateCoinText();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Sprint mode");
         Menue.instance.UpdateCoinText();
     }
 
@@ -105,6 +184,46 @@ public class UIManager : MonoBehaviour
     {
         totalDistanceText.text = distanceText.text.ToString();
         GameDataManager.Instance.enduranceRank.mile = Distance;
+    }
+
+    public void UpdateCoinText(string coins)
+    {
+        coinText.text = coins;
+    }
+
+    public void UpdateSprintRoundText()
+    {
+        roundText.text = (GameDataManager.Instance.sprintRoundCount + 1).ToString();
+    }
+
+    //public void SetTotalPositions(int total)
+    //{
+    //    totalPositions = total;
+    //    totalPositionText.text = total.ToString();
+    //}
+
+    public void UpdateSprintPostion()
+    {
+        if (player.transform.position.y > opponent.transform.position.y)
+            position = 1;
+        else
+            position = 2;
+
+        positionText.text = position.ToString();
+    }
+
+    public void DisplaySprintRaceResult()
+    {
+        gameOverPositionText.text = "Position: " + positionText.text;
+        gameOverRoundText.text = "Rounds: " + GameDataManager.Instance.sprintRoundCount.ToString();
+        gameWinPositionText.text = "Position: " + positionText.text;
+        gameWinRoundText.text = "Rounds: " + GameDataManager.Instance.sprintRoundCount.ToString();
+    }
+
+    private void Update()
+    {
+        if(sprintMode)
+            UpdateSprintPostion();
     }
 }
 

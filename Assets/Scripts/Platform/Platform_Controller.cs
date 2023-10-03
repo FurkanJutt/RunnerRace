@@ -20,10 +20,10 @@ public class Platform_Controller : MonoBehaviour
 			newCollects[i].SetActive(false);
 		}
 
-        PositionateCollects();
+        PositionCollects();
     }
 
-	private void PositionateCollects()
+	private void PositionCollects()
     {
 		for (int i = 0; i < newCollects.Count; i++)
 		{
@@ -42,7 +42,7 @@ public class Platform_Controller : MonoBehaviour
 		if (other !=null && other.CompareTag("Destroyer"))
 		{
 			transform.position = new Vector3(0, transform.position.y + 51 * 3, 0);
-            PositionateCollects();
+            PositionCollects();
 		}
 	}
 }

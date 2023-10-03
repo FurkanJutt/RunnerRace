@@ -5,7 +5,7 @@ using static ControlFreak2.TouchControl;
 
 public class Object_Movement : MonoBehaviour
 {
-    private Transform objectTransform;
+    //private Transform objectTransform;
 
     private float speed = 2f;
     public float minSpeed = 2f;
@@ -15,7 +15,7 @@ public class Object_Movement : MonoBehaviour
     void Start()
     {
         speed = Random.Range(minSpeed, maxSpeed);
-        objectTransform = GetComponent<Transform>();
+        //objectTransform = GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -31,6 +31,19 @@ public class Object_Movement : MonoBehaviour
         if (collider.CompareTag("Grass") || collider.CompareTag("Water"))
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Opponent"))
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject, 1.5f);
         }
     }
 
