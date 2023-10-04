@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 34a15d08b39688c4da8ca50ae17aba1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 86cde2197240100478b8018ce20c334f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -123,7 +123,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.54, y: 1.03}
+    oldSize: {x: 0.545, y: 1.03}
     newSize: {x: 0.54, y: 1.01}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -173,7 +173,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 3
   maxSpeed: 5.35
-  tempPos: {x: 0, y: 0, z: 0}
+  waypoints: []
+  targetPoint: 0
   engineStart: {fileID: 8300000, guid: 4e29a02ed4056af4e9569f709d52af37, type: 3}
+  hitClip: {fileID: 0}
   waterClip: {fileID: 8300000, guid: 07729c74b6b4e40498bf653a7c37d7b4, type: 3}
   grassClip: {fileID: 8300000, guid: 4c810bc42a5535a4fa4445178baa7a4d, type: 3}

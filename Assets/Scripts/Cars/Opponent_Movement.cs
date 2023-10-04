@@ -92,6 +92,7 @@ public class Opponent_Movement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Opponent"))
         {
+            GameDataManager.Instance.sprintRank.crash++;
             UIManager.instance.gameWinPanel.SetActive(true);
             SoundManager.instance.PlaySoundFX(hitClip, 0.9f);
             GameDataManager.Instance.EndGame();
@@ -126,6 +127,7 @@ public class Opponent_Movement : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Water"))
         {
+            GameDataManager.Instance.sprintRank.crash++;
             //tempPos = respawnPosition.position;
             SoundManager.instance.PlaySoundFX(waterClip, 0.2f);
             //StartCoroutine(RespawnAfterDelay(1f));
@@ -134,6 +136,7 @@ public class Opponent_Movement : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Grass"))
         {
+            GameDataManager.Instance.sprintRank.crash++;
             //tempPos = respawnPosition.position;
             SoundManager.instance.PlaySoundFX(grassClip, 0.2f);
             //StartCoroutine(RespawnAfterDelay(1f));

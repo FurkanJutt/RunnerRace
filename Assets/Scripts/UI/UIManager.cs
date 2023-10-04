@@ -161,7 +161,7 @@ public class UIManager : MonoBehaviour
     public void Home()
     {
         if (FinishLane.instance != null)
-        {
+        {   
             FinishLane.instance.GameOver();
         }
         SceneManager.LoadScene("Start Scene");
@@ -170,6 +170,7 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
+        GameDataManager.Instance.sprintRoundCount++;
         SceneManager.LoadScene("Sprint mode");
         Menue.instance.UpdateCoinText();
     }

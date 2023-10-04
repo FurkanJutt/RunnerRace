@@ -38,8 +38,6 @@ public class FinishLane : MonoBehaviour
             //    playerFinishCount++; // Increment finishes count if player finished first
             //    playerFinishedRound = true; // Player finished this round
             //}
-
-            GameDataManager.Instance.sprintRoundCount++;
             Time.timeScale = 0f;
             UIManager.instance.gameWinPanel.SetActive(true);
             UIManager.instance.DisplaySprintRaceResult();

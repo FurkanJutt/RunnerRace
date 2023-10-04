@@ -226,12 +226,16 @@ public class Player_Movement : MonoBehaviour
         //}
         if (other.gameObject.CompareTag("Opponent"))
         {
+            crash++;
+            GameDataManager.Instance.sprintRank.crash = crash;
             UIManager.instance.gameOverPanel.SetActive(true);
             SoundManager.instance.PlaySoundFX(hitClip, 0.9f);
             GameDataManager.Instance.EndGame();
         }
         else if (other.gameObject.CompareTag("OtherCar"))
         {
+            crash++;
+            GameDataManager.Instance.sprintRank.crash = crash;
             StartCoroutine(PushCar(other));
         }
         //else if (other.CompareTag("CheckPoint"))
@@ -265,12 +269,16 @@ public class Player_Movement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Water"))
         {
+            crash++;
+            GameDataManager.Instance.sprintRank.crash = crash;
             UIManager.instance.gameOverPanel.SetActive(true);
             SoundManager.instance.PlaySoundFX(waterClip, 0.9f);
             GameDataManager.Instance.EndGame();
         }
         else if (other.gameObject.CompareTag("Grass"))
         {
+            crash++;
+            GameDataManager.Instance.sprintRank.crash = crash;
             SoundManager.instance.PlaySoundFX(grassClip, 0.9f);
             StartCoroutine(RespawnAfterDelay(1f));
         }
