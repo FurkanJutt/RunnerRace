@@ -34,6 +34,7 @@ public class ShopItem : MonoBehaviour
 
     private void OnEnable()
     {
+        PlayerPrefs.SetInt("Car" + 0, 1);
         //PlayerPrefs.SetInt("TotalScore", 60000);
         if (shopItemType == ShopItemType.Car)
         {
@@ -105,51 +106,51 @@ public class ShopItem : MonoBehaviour
             }
 
         }
-        else if (shopItemType == ShopItemType.Life)
-        {
-            if (Menue.instance.playerCoins >= cost)
-            {
-                //AudioManager.Instance.PlaySFX(SFXType.unlockLifes);
+        //else if (shopItemType == ShopItemType.Life)
+        //{
+        //    if (Menue.instance.playerCoins >= cost)
+        //    {
+        //        //AudioManager.Instance.PlaySFX(SFXType.unlockLifes);
 
-                PlayerPrefs.SetInt("Life" + id, 1);
-                //PlayerPrefs.SetInt("SelectLife", id);
-                Menue.instance.playerCoins -= cost;
-                Menue.instance.UpdateCoinText();
-                //PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore", 0) - cost);
-            }
-            else
-            {
-                InsufficentFunds.SetActive(true);
-            }
-        }
-        else if (shopItemType == ShopItemType.Time)
-        {
-            if (Menue.instance.playerCoins >= cost)
-            {
-                PlayerPrefs.SetInt("Time" + id, 1);
-                //PlayerPrefs.SetInt("SelectTime", id);
-                Menue.instance.playerCoins -= cost;
-                Menue.instance.UpdateCoinText();
-            }
-            else
-            {
-                InsufficentFunds.SetActive(true);
-            }
-        }
-        else if (shopItemType == ShopItemType.Respawn)
-        {
-            if (Menue.instance.playerCoins >= cost)
-            {
-                PlayerPrefs.SetInt("Respawn" + id, 1);
-                //PlayerPrefs.SetInt("SelectRespawn", id);
-                Menue.instance.playerCoins -= cost;
-                Menue.instance.UpdateCoinText();
-            }
-            else
-            {
-                InsufficentFunds.SetActive(true);
-            }
-        }
+        //        PlayerPrefs.SetInt("Life" + id, 1);
+        //        //PlayerPrefs.SetInt("SelectLife", id);
+        //        Menue.instance.playerCoins -= cost;
+        //        Menue.instance.UpdateCoinText();
+        //        //PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore", 0) - cost);
+        //    }
+        //    else
+        //    {
+        //        InsufficentFunds.SetActive(true);
+        //    }
+        //}
+        //else if (shopItemType == ShopItemType.Time)
+        //{
+        //    if (Menue.instance.playerCoins >= cost)
+        //    {
+        //        PlayerPrefs.SetInt("Time" + id, 1);
+        //        //PlayerPrefs.SetInt("SelectTime", id);
+        //        Menue.instance.playerCoins -= cost;
+        //        Menue.instance.UpdateCoinText();
+        //    }
+        //    else
+        //    {
+        //        InsufficentFunds.SetActive(true);
+        //    }
+        //}
+        //else if (shopItemType == ShopItemType.Respawn)
+        //{
+        //    if (Menue.instance.playerCoins >= cost)
+        //    {
+        //        PlayerPrefs.SetInt("Respawn" + id, 1);
+        //        //PlayerPrefs.SetInt("SelectRespawn", id);
+        //        Menue.instance.playerCoins -= cost;
+        //        Menue.instance.UpdateCoinText();
+        //    }
+        //    else
+        //    {
+        //        InsufficentFunds.SetActive(true);
+        //    }
+        //}
         // MainMenuController.Instance.UpdateTextScore();
         //UpdateState();
         UpdateAllItem();
@@ -176,54 +177,54 @@ public class ShopItem : MonoBehaviour
                 GetComponent<Image>().sprite = DefaultImage;
             }
         }
-        else if(shopItemType == ShopItemType.Life)
-        {
-            //if (PlayerPrefs.GetInt("Life" + id, 0) == 1)
-            //{
-            //    costObject.gameObject.SetActive(false);
-            //}
-            //else
-            //{
-            //    costObject.gameObject.SetActive(true);
-            //}
-            selectedImage.SetActive(PlayerPrefs.GetInt("Life"+id, 0) == 1);
-            if (PlayerPrefs.GetInt("Life" + id, 0) == 1)
-            {
-                //GetComponent<Image>().sprite = SlectImage;
-                GetComponent<Button>().interactable = false;
-            }
-            else
-            {
-                //GetComponent<Image>().sprite = DefaultImage;
-                GetComponent<Button>().interactable = true;
+        //else if(shopItemType == ShopItemType.Life)
+        //{
+        //    //if (PlayerPrefs.GetInt("Life" + id, 0) == 1)
+        //    //{
+        //    //    costObject.gameObject.SetActive(false);
+        //    //}
+        //    //else
+        //    //{
+        //    //    costObject.gameObject.SetActive(true);
+        //    //}
+        //    selectedImage.SetActive(PlayerPrefs.GetInt("Life"+id, 0) == 1);
+        //    if (PlayerPrefs.GetInt("Life" + id, 0) == 1)
+        //    {
+        //        //GetComponent<Image>().sprite = SlectImage;
+        //        GetComponent<Button>().interactable = false;
+        //    }
+        //    else
+        //    {
+        //        //GetComponent<Image>().sprite = DefaultImage;
+        //        GetComponent<Button>().interactable = true;
 
-            }
-            //BGForLife.SetActive(false);
-            //BGForLife.SetActive(true);
-        }
-        else if (shopItemType == ShopItemType.Time)
-        {
-            if (PlayerPrefs.GetInt("Time" + id, 0) == 1)
-            {
-                GetComponent<Button>().interactable = false;
-            }
-            else
-            {
-                GetComponent<Button>().interactable = true;
-            }
-        }
-        else if (shopItemType == ShopItemType.Respawn)
-        {
+        //    }
+        //    //BGForLife.SetActive(false);
+        //    //BGForLife.SetActive(true);
+        //}
+        //else if (shopItemType == ShopItemType.Time)
+        //{
+        //    if (PlayerPrefs.GetInt("Time" + id, 0) == 1)
+        //    {
+        //        GetComponent<Button>().interactable = false;
+        //    }
+        //    else
+        //    {
+        //        GetComponent<Button>().interactable = true;
+        //    }
+        //}
+        //else if (shopItemType == ShopItemType.Respawn)
+        //{
             
-            if (PlayerPrefs.GetInt("Respawn" + id, 0) == 1)
-            {
-                GetComponent<Button>().interactable = false;
-            }
-            else
-            {
-                GetComponent<Button>().interactable = true;
-            }
-        }
+        //    if (PlayerPrefs.GetInt("Respawn" + id, 0) == 1)
+        //    {
+        //        GetComponent<Button>().interactable = false;
+        //    }
+        //    else
+        //    {
+        //        GetComponent<Button>().interactable = true;
+        //    }
+        //}
     }
     void UpdateAllItem()
     {

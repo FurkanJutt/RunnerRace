@@ -92,10 +92,11 @@ public class Opponent_Movement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Opponent"))
         {
-            GameDataManager.Instance.sprintRank.crash++;
+            //GameDataManager.Instance.sprintRank.crash++;
+            UIManager.instance.DisplaySprintRaceResult();
             UIManager.instance.gameWinPanel.SetActive(true);
+            Time.timeScale = 0f;
             SoundManager.instance.PlaySoundFX(hitClip, 0.9f);
-            GameDataManager.Instance.EndGame();
         }
 
         //if (other.gameObject.CompareTag("Opponent") || other.gameObject.CompareTag("OtherCar"))
@@ -127,21 +128,23 @@ public class Opponent_Movement : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Water"))
         {
-            GameDataManager.Instance.sprintRank.crash++;
+            //GameDataManager.Instance.sprintRank.crash++;
             //tempPos = respawnPosition.position;
             SoundManager.instance.PlaySoundFX(waterClip, 0.2f);
             //StartCoroutine(RespawnAfterDelay(1f));
+            UIManager.instance.DisplaySprintRaceResult();
             UIManager.instance.gameWinPanel.SetActive(true);
-            GameDataManager.Instance.EndGame();
+            Time.timeScale = 0f;
         }
         else if (other.gameObject.CompareTag("Grass"))
         {
-            GameDataManager.Instance.sprintRank.crash++;
+            //GameDataManager.Instance.sprintRank.crash++;
             //tempPos = respawnPosition.position;
             SoundManager.instance.PlaySoundFX(grassClip, 0.2f);
             //StartCoroutine(RespawnAfterDelay(1f));
+            UIManager.instance.DisplaySprintRaceResult();
             UIManager.instance.gameWinPanel.SetActive(true);
-            GameDataManager.Instance.EndGame();
+            Time.timeScale = 0f;
         }
     }
 

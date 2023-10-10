@@ -64,17 +64,9 @@ public class TimerController : MonoBehaviour
             {
                 currentTime = 0;
                 isGameOver = true;
-                Time.timeScale = 0f;
 
-                float timePlayed = timerDuration - currentTime;
-
-                DisplayTotalTimePlayed();
                 UIManager.instance.gameOverPanel.SetActive(true);
-                UIManager.instance.UpdateTotalDistance();
-
-                GameDataManager.Instance.enduranceRank.time = totalTimePlayed;
-                GameDataManager.Instance.enduranceRank.mile = UIManager.instance.Distance;
-                GameDataManager.Instance.AddEnduranceRank();
+                GameDataManager.Instance.EndGame();
             }
 
             UpdateTimerText();

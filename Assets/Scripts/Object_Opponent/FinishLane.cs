@@ -40,16 +40,13 @@ public class FinishLane : MonoBehaviour
             //}
             Time.timeScale = 0f;
             UIManager.instance.gameWinPanel.SetActive(true);
-            UIManager.instance.DisplaySprintRaceResult();
             //DisplayRaceResult(playerRoundFinishCount, playerFinishCount); // Update UI with the round and finish counts
         }
         else if (other.CompareTag(opponentTag))
         {
             //playerFinishedRound = false; // Opponent touched the finish line before the player
             Time.timeScale = 0f;
-            GameOver();
             UIManager.instance.gameOverPanel.SetActive(true);
-            UIManager.instance.DisplaySprintRaceResult();
             //DisplayRaceResult(playerRoundFinishCount, playerFinishCount); // Update UI with the round and finish counts
         }
     }
@@ -68,14 +65,9 @@ public class FinishLane : MonoBehaviour
         {
             // Call this function when the game is over (e.g., when you want to end the race)
             GameDataManager.Instance.sprintRank.round = GameDataManager.Instance.sprintRoundCount;
-            GameDataManager.Instance.sprintRank.crash = Player_Movement.instance.crash;
+            //GameDataManager.Instance.sprintRank.crash = Player_Movement.instance.crash;
             GameDataManager.Instance.sprintRank.finish = int.Parse(UIManager.instance.positionText.text);
             GameDataManager.Instance.AddSprintRank();
         }
-    }
-
-    private void OnDestroy()
-    {
-        GameOver();
     }
 }

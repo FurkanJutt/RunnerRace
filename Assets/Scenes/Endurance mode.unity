@@ -5123,6 +5123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collects:
   - {fileID: 4897107228602918429, guid: b6034e32f3e4c9d489d28a057d12e4d1, type: 3}
+  - {fileID: 262378302477776712, guid: 5ffda3ac2cb845f4fa2bc85eb5c981d9, type: 3}
   numberOfCollects: {x: 5, y: 10}
   newCollects: []
 --- !u!61 &1327593334
@@ -7405,6 +7406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collects:
   - {fileID: 4897107228602918429, guid: b6034e32f3e4c9d489d28a057d12e4d1, type: 3}
+  - {fileID: 262378302477776712, guid: 5ffda3ac2cb845f4fa2bc85eb5c981d9, type: 3}
   numberOfCollects: {x: 5, y: 10}
   newCollects: []
 --- !u!61 &1926303318
@@ -8920,6 +8922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collects:
   - {fileID: 4897107228602918429, guid: b6034e32f3e4c9d489d28a057d12e4d1, type: 3}
+  - {fileID: 262378302477776712, guid: 5ffda3ac2cb845f4fa2bc85eb5c981d9, type: 3}
   numberOfCollects: {x: 5, y: 10}
   newCollects: []
 --- !u!61 &2107952686

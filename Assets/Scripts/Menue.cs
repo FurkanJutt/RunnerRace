@@ -162,7 +162,7 @@ public class Menue : MonoBehaviour
         {
             SprintboardParent.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = (i + 1).ToString();
             SprintboardParent.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = GameDataManager.Instance.sprintRanks[i].round.ToString();
-            SprintboardParent.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameDataManager.Instance.sprintRanks[i].crash.ToString();
+            //SprintboardParent.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = GameDataManager.Instance.sprintRanks[i].crash.ToString();
             SprintboardParent.GetChild(i).GetChild(3).GetComponent<TextMeshProUGUI>().text = (GameDataManager.Instance.sprintRanks[i].finish).ToString();
         }
     }
@@ -196,6 +196,7 @@ public class Menue : MonoBehaviour
 
     public void SprintMode()
     {
+        GameDataManager.Instance.sprintRoundCount = 1;
         SceneManager.LoadScene("Sprint mode");
     }
 

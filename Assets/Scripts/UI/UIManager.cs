@@ -97,9 +97,9 @@ public class UIManager : MonoBehaviour
             {
                 lifeHearts[i].gameObject.SetActive(false);
             }
+            UpdateSprintRoundText();
         }
-        respawnChancesText.text = GetMaxRespawn().ToString();
-        UpdateSprintRoundText();
+        //respawnChancesText.text = GetMaxRespawn().ToString();
         //position = totalPositions;
         //UpdateSprintPostion();
     }
@@ -160,10 +160,7 @@ public class UIManager : MonoBehaviour
 
     public void Home()
     {
-        if (FinishLane.instance != null)
-        {   
-            FinishLane.instance.GameOver();
-        }
+        GameDataManager.Instance.EndGame();
         SceneManager.LoadScene("Start Scene");
         Menue.instance.UpdateCoinText();
     }
@@ -194,7 +191,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateSprintRoundText()
     {
-        roundText.text = (GameDataManager.Instance.sprintRoundCount + 1).ToString();
+        roundText.text = GameDataManager.Instance.sprintRoundCount.ToString();
     }
 
     //public void SetTotalPositions(int total)

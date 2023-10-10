@@ -56,7 +56,6 @@ public class GameDataManager : MonoBehaviour
 
     void Start()
     {
-        sprintRoundCount = 0;
         if (string.IsNullOrEmpty(sprintRanksJson))
         {
             SaveSpringRank();
@@ -84,6 +83,17 @@ public class GameDataManager : MonoBehaviour
         {
             enduranceRanks.RemoveAt((enduranceRanks.Count - 1));
         }
+        for (int i = 0; i < enduranceRanks.Count - 1; i++)
+        {
+            if (enduranceRanks[i].time == enduranceRanks[i+1].time && enduranceRanks[i].mile < enduranceRanks[i+1].mile)
+            {
+                float tempTime = enduranceRanks[i].time;
+                float tempMile = enduranceRanks[i].mile;
+                enduranceRanks[i] = enduranceRanks[i+1];
+                enduranceRanks[i+1].time = tempTime;
+                enduranceRanks[i+1].mile = tempMile;
+            }
+        }
         SaveEnduranceRank();
         enduranceRank = new EnduranceRank();
     }
@@ -92,10 +102,23 @@ public class GameDataManager : MonoBehaviour
     {
         Debug.Log("AddSprintRank");
         sprintRanks.Add(sprintRank);
-        sprintRanks = sprintRanks.OrderByDescending(o => o.crash).ToList();
+        sprintRanks = sprintRanks.OrderByDescending(o => o.round).ToList();
         if (sprintRanks.Count>10)
         {
             sprintRanks.RemoveAt(sprintRanks.Count-1);
+        }
+        for (int i = 0; i < sprintRanks.Count - 1; i++)
+        {
+            //int tempRank1 = sprintRanks[i].crash + sprintRanks[i].finish;
+            //int tempRank2 = sprintRanks[i+1].crash + sprintRanks[i+1].finish;
+            if (sprintRanks[i].round == sprintRanks[i + 1].round && sprintRanks[i].finish < sprintRanks[i + 1].finish)
+            {
+                //int tempCrash = sprintRanks[i].crash;
+                int tempFinish = sprintRanks[i].finish;
+                sprintRanks[i] = sprintRanks[i + 1];
+                //sprintRanks[i + 1].crash = tempCrash;
+                sprintRanks[i + 1].finish = tempFinish;
+            }
         }
         SaveSpringRank();
         sprintRank = new SprintRank();
@@ -148,6 +171,6 @@ public class EnduranceRank
 public class SprintRank
 {
     public int round;
-    public int crash;
+    //public int crash;
     public int finish;
 }
