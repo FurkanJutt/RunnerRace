@@ -228,10 +228,11 @@ public class Player_Movement : MonoBehaviour
         {
             //crash++;
             //GameDataManager.Instance.sprintRank.crash = crash;
-            UIManager.instance.DisplaySprintRaceResult();
-            UIManager.instance.gameOverPanel.SetActive(true);
-            Time.timeScale = 0f;
+            //UIManager.instance.DisplayRaceResult();
             SoundManager.instance.PlaySoundFX(hitClip, 0.9f);
+            //UIManager.instance.gameOverPanel.SetActive(true);
+            //Time.timeScale = 0f;
+            StartCoroutine(RespawnAfterDelay(1f)); 
         }
         else if (other.gameObject.CompareTag("OtherCar"))
         {
@@ -272,7 +273,8 @@ public class Player_Movement : MonoBehaviour
         {
             //crash++;
             //GameDataManager.Instance.sprintRank.crash = crash;
-            UIManager.instance.DisplaySprintRaceResult();
+            UIManager.instance.position = 2;
+            UIManager.instance.DisplayRaceResult();
             UIManager.instance.gameOverPanel.SetActive(true);
             SoundManager.instance.PlaySoundFX(waterClip, 0.9f);
             Time.timeScale = 0f;
@@ -300,6 +302,7 @@ public class Player_Movement : MonoBehaviour
 
     private IEnumerator RespawnAfterDelay(float delay)
     {
+        damagedSprite.SetActive(true);
         yield return new WaitForSeconds(0.3f);
 
         float tempCamSpeed = CameraMovement.instance.cameraSpeed;
@@ -311,7 +314,8 @@ public class Player_Movement : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        UIManager.instance.DisplaySprintRaceResult();
+        UIManager.instance.position = 2;
+        UIManager.instance.DisplayRaceResult();
         UIManager.instance.gameOverPanel.SetActive(true);
 
         //if (!isSprintMode)

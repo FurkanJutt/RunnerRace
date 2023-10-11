@@ -202,15 +202,18 @@ public class UIManager : MonoBehaviour
 
     public void UpdateSprintPostion()
     {
-        if (player.transform.position.y > opponent.transform.position.y)
-            position = 1;
-        else
-            position = 2;
+        if (Time.timeScale != 0f)
+        {
+            if (player.transform.position.y > opponent.transform.position.y)
+                position = 1;
+            else
+                position = 2;
 
-        positionText.text = position.ToString();
+            positionText.text = position.ToString();
+        }
     }
 
-    public void DisplaySprintRaceResult()
+    public void DisplayRaceResult()
     {
         gameOverPositionText.text = "Position: " + positionText.text;
         gameOverRoundText.text = "Rounds: " + GameDataManager.Instance.sprintRoundCount.ToString();
